@@ -28,12 +28,10 @@ in
         build = "i686-linux";
       }
       {
-        build = "i686-linux";
-        host = "x86_64-linux";
+        build = "x86_64-linux";
       }
       {
-        build = "x86_64-linux";
-        host = "@linux";
+        build = "aarch64-linux";
       }
     ];
 
@@ -89,11 +87,7 @@ in
 
       host = {
         host = {
-          zlib =
-            if (config.platform.build == "i686-linux" && config.platform.build == config.platform.host) then
-              packages.foundation.zlib.versions."1.3-bootstrap"
-            else
-              packages.foundation.zlib.versions."1.3-stage1";
+          zlib = packages.universe.zlib.stable;
         };
       };
     };
