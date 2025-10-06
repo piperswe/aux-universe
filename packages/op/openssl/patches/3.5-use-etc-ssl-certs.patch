@@ -1,5 +1,5 @@
 diff --git a/include/internal/common.h b/include/internal/common.h
-index 15666f1..d91e25b 100644
+index 894dac9..2d82cc8 100644
 --- a/include/internal/common.h
 +++ b/include/internal/common.h
 @@ -83,7 +83,7 @@ __owur static ossl_inline int ossl_assert_int(int expr, const char *exprstr,
@@ -11,4 +11,3 @@ index 15666f1..d91e25b 100644
  #  define X509_PRIVATE_DIR        OPENSSLDIR "/private"
  #  define CTLOG_FILE              OPENSSLDIR "/ct_log_list.cnf"
  # else
-
