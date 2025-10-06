@@ -1,4 +1,4 @@
-{ version, url, hash }:
+{ version, url, hash, dir ? null }:
 { config, global }:
 
 let
@@ -8,6 +8,8 @@ let
     builders
     mirrors
     ;
+  
+  d = if dir == null then "vim${builtins.replaceStrings ["."] [""] version}" else dir;
 
   platform = {
     build = lib.systems.withBuildInfo config.platform.build;
@@ -74,7 +76,7 @@ in
     phases = {
       unpack = ''
         tar xf ${config.src}
-        cd vim${builtins.replaceStrings ["."] [""] version}
+        cd ${d}
       '';
 
       configure =

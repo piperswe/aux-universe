@@ -16,6 +16,7 @@
       auxModules.universe = ./packages;
       auxUniverse = tidepool.extend { modules = [auxModules.universe]; };
       packages = eachSystem (system: builtins.mapAttrs (k: v: v.stable.packages."${system}"."${system}"."${system}".package) auxUniverse.config.packages.universe);
+      packagesLatest = eachSystem (system: builtins.mapAttrs (k: v: v.latest.packages."${system}"."${system}"."${system}".package) auxUniverse.config.packages.universe);
       versionedPackages = eachSystem (system: builtins.mapAttrs (k: v: builtins.mapAttrs (k: v: v.packages."${system}"."${system}"."${system}".package) v.versions) auxUniverse.config.packages.universe);
     };
 }

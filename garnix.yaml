@@ -2,5 +2,8 @@ builds:
   exclude: []
   include:
   - packages.i686-linux.*
+  - packagesLatest.i686-linux.*
   - packages.x86_64-linux.*
+  - packagesLatest.x86_64-linux.*
   - packages.aarch64-linux.*
+  - packagesLatest.aarch64-linux.*
