@@ -1,4 +1,3 @@
-{ version, url, hash }:
 { config, global }:
 
 let
@@ -8,6 +7,8 @@ let
     builders
     mirrors
     ;
+
+  version = "6.5";
 
   platform = {
     build = lib.systems.withBuildInfo config.platform.build;
@@ -41,13 +42,13 @@ in
     builder = builders.foundation.basic;
 
     src = lib.fetchurl {
-      inherit url hash;
+      url = "https://invisible-island.net/archives/ncurses/ncurses-6.5.tar.gz";
+      hash = "sha256-E22RvCaamleF5fnpgLx2q1dCj2BM4+WlqQzrx2eXHMY=";
     };
 
     deps = {
       build = {
         build = {
-	  bzip2 = packages.foundation.bzip2.versions."1.0.8-stage1-passthrough";
           gnumake = packages.foundation.gnumake.versions."4.4.1-stage1-passthrough";
           gnupatch = packages.foundation.gnupatch.versions."2.7-stage1-passthrough";
           gnused = packages.foundation.gnused.versions."4.9-stage1-passthrough";
@@ -59,8 +60,6 @@ in
           findutils = packages.foundation.findutils.versions."4.9.0-stage1-passthrough";
           gcc = packages.foundation.gcc.versions."13.2.0-stage4";
           binutils = packages.foundation.binutils.versions."2.41-stage1-passthrough";
-
-	  ncurses = packages.universe.ncurses.stable;
         };
 
         host = lib.attrs.when (config.platform.build != config.platform.host) {
@@ -73,7 +72,7 @@ in
     phases = {
       unpack = ''
         tar xf ${config.src}
-        cd vim${builtins.replaceStrings ["."] [""] version}
+        cd ncurses-${version}
       '';
 
       configure =
@@ -83,6 +82,8 @@ in
               "--prefix=$out"
               "--build=${platform.build.triple}"
               "--host=${platform.host.triple}"
+	      "--with-shared"
+	      "--with-termlib"
             ]
           );
         in
@@ -99,6 +100,15 @@ in
       install = ''
         # Install
         make -j $NIX_BUILD_CORES install
+	mkdir -p $out/lib/pkgconfig
+	ln -sfv ncursesw $out/include/ncurses
+	for lib in form menu ncurses panel tinfo; do
+	  ln -sfv lib''${lib}w.a             $out/lib/lib$lib.a
+	  ln -sfv lib''${lib}w.so            $out/lib/lib$lib.so
+	  ln -sfv lib''${lib}w.so.6          $out/lib/lib$lib.so.6
+	  ln -sfv lib''${lib}w.so.${version} $out/lib/lib$lib.so.${version}
+          ln -sfv ''${lib}w.pc               $out/lib/pkgconfig/$lib.pc
+        done
       '';
     };
   };

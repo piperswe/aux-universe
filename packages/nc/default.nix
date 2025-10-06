@@ -1,7 +1,6 @@
 { config }:
 {
 	includes = [
-		./nc
-		./vi
+		./ncurses
 	];
 }
