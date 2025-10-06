@@ -59,14 +59,17 @@ in
           findutils = packages.foundation.findutils.versions."4.9.0-stage1-passthrough";
           gcc = packages.foundation.gcc.versions."13.2.0-stage4";
           binutils = packages.foundation.binutils.versions."2.41-stage1-passthrough";
-
-	  ncurses = packages.universe.ncurses.stable;
         };
 
         host = lib.attrs.when (config.platform.build != config.platform.host) {
           gcc = packages.foundation.gcc.versions."13.2.0-stage2";
           binutils = packages.foundation.binutils.versions."2.41-stage1";
         };
+      };
+      host = {
+        host = {
+	  ncurses = packages.universe.ncurses.stable;
+	};
       };
     };
 

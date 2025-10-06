@@ -69,6 +69,14 @@ in
       };
     };
 
+    context = {
+      "foundation:cflags" = [
+        "-isystem ${config.package}/include"
+        "-L${config.package}/lib"
+        "-Wl,-rpath,${config.package}/lib"
+      ];
+    };
+
     phases = {
       unpack = ''
         tar xf ${config.src}
