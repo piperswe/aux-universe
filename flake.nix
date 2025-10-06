@@ -7,8 +7,8 @@
 
   outputs = { self, tidepool }: rec {
     auxModules.universe = ./packages;
-    packages.x86_64-linux = builtins.mapAttrs (k: v: v.stable.package) (tidepool.extend {
-      modules = [auxModules.universe];
-    }).config.packages.universe;
+    auxUniverse = tidepool.extend { modules = [auxModules.universe]; };
+    packages.x86_64-linux = builtins.mapAttrs (k: v: v.stable.package) auxUniverse.config.packages.universe;
+    versionedPackages.x86_64-linux = builtins.mapAttrs (k: v: builtins.mapAttrs (k: v: v.packages) v.versions) auxUniverse.config.packages.universe;
   };
 }
