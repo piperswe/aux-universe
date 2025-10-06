@@ -1,0 +1,7 @@
+{ config }:
+{
+	includes = [
+		./libidn
+		./libpsl
+	];
+}

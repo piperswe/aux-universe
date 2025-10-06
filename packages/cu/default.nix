@@ -1,0 +1,6 @@
+{ config }:
+{
+	includes = [
+		./curl
+	];
+}
