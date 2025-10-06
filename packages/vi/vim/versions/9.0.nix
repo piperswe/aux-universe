@@ -1,0 +1,107 @@
+{ config, global }:
+
+let
+  inherit (global)
+    lib
+    packages
+    builders
+    mirrors
+    ;
+
+  version = "9.0";
+
+  platform = {
+    build = lib.systems.withBuildInfo config.platform.build;
+    host = lib.systems.withBuildInfo config.platform.host;
+    target = lib.systems.withBuildInfo config.platform.target;
+  };
+in
+{
+  config = {
+    meta = {
+      description = "GNU Bourne-Again Shell, the de facto standard shell on Linux";
+      homepage = "https://www.gnu.org/software/bash";
+      license = lib.licenses.gpl3Plus;
+      main = "/bin/bash";
+    };
+
+    platforms = [
+      {
+        build = "i686-linux";
+      }
+      {
+        build = "i686-linux";
+        host = "x86_64-linux";
+      }
+      {
+        build = "x86_64-linux";
+        host = "@linux";
+      }
+    ];
+
+    builder = builders.foundation.basic;
+
+    src = lib.fetchurl {
+      url = "https://www.mirrorservice.org/pub/vim/unix/vim-${version}.tar.bz2";
+      hash = "sha256-pkVrwVSZnYPQwg2Wise6bn3w0C88tkJ/skhmC6z7M24=";
+    };
+
+    deps = {
+      build = {
+        build = {
+              gnumake = packages.foundation.gnumake.versions."4.4.1-stage1-passthrough";
+              gnupatch = packages.foundation.gnupatch.versions."2.7-stage1-passthrough";
+              gnused = packages.foundation.gnused.versions."4.9-stage1-passthrough";
+              gnutar = packages.foundation.gnutar.versions."1.35-stage1-passthrough";
+              gnugrep = packages.foundation.gnugrep.versions."3.11-stage1-passthrough";
+              gawk = packages.foundation.gawk.versions."5.2.2-stage1-passthrough";
+              gzip = packages.foundation.gzip.versions."1.13-stage1-passthrough";
+              diffutils = packages.foundation.diffutils.versions."3.10-stage1-passthrough";
+              findutils = packages.foundation.findutils.versions."4.9.0-stage1-passthrough";
+              gcc = packages.foundation.gcc.versions."13.2.0-stage4";
+              binutils = packages.foundation.binutils.versions."2.41-stage1-passthrough";
+            };
+
+        host = lib.attrs.when (config.platform.build != config.platform.host) {
+          gcc = packages.foundation.gcc.versions."13.2.0-stage2";
+          binutils = packages.foundation.binutils.versions."2.41-stage1";
+        };
+      };
+    };
+
+    phases = {
+      unpack = ''
+        # Unpack
+        tar xf ${config.src}
+        cd vim-${version}
+      '';
+
+      configure =
+        let
+          flags = builtins.concatStringsSep " " (
+            [
+              "--prefix=$out"
+              "--build=${platform.build.triple}"
+              "--host=${platform.host.triple}"
+              "--enable-static-link"
+            ]
+          );
+        in
+        ''
+          # Configure
+          bash ./configure
+        '';
+
+      build = ''
+        # Build
+        make -j $NIX_BUILD_CORES
+      '';
+
+      install = ''
+        # Install
+        make -j $NIX_BUILD_CORES install
+      '';
+    };
+  };
+}
+

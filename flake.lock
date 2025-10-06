@@ -1,0 +1,26 @@
+{
+  "nodes": {
+    "root": {
+      "inputs": {
+        "tidepool": "tidepool"
+      }
+    },
+    "tidepool": {
+      "locked": {
+        "dir": "tidepool",
+        "lastModified": 1759763456,
+        "narHash": "sha256-WxlTgYzFLQaz34BbAGP5VrUJ1/aRPqot6qe4i2xZ28o=",
+        "rev": "8174d3a494e3fe1cf8438b62f6a55e24ccb66a21",
+        "type": "tarball",
+        "url": "https://git.auxolotl.org/api/v1/repos/auxolotl/labs/archive/8174d3a494e3fe1cf8438b62f6a55e24ccb66a21.tar.gz?rev=8174d3a494e3fe1cf8438b62f6a55e24ccb66a21"
+      },
+      "original": {
+        "dir": "tidepool",
+        "type": "tarball",
+        "url": "https://git.auxolotl.org/auxolotl/labs/archive/main.tar.gz"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
