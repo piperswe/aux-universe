@@ -6,6 +6,7 @@
 
     versions = {
       "9.0" = ./versions/9.0.nix;
+      "8.2" = ./versions/8.2.nix;
     };
   };
 }

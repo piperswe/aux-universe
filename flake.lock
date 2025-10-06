@@ -8,16 +8,19 @@
     "tidepool": {
       "locked": {
         "dir": "tidepool",
-        "lastModified": 1759763456,
-        "narHash": "sha256-WxlTgYzFLQaz34BbAGP5VrUJ1/aRPqot6qe4i2xZ28o=",
-        "rev": "8174d3a494e3fe1cf8438b62f6a55e24ccb66a21",
-        "type": "tarball",
-        "url": "https://git.auxolotl.org/api/v1/repos/auxolotl/labs/archive/8174d3a494e3fe1cf8438b62f6a55e24ccb66a21.tar.gz?rev=8174d3a494e3fe1cf8438b62f6a55e24ccb66a21"
+        "lastModified": 1759776741,
+        "narHash": "sha256-Uc/5pd+H+kbD56PhsyTVjrKIFrnvfq4cW8u1N6XoxYA=",
+        "ref": "update-foundation-10-6-25",
+        "rev": "85bcf6ce53f6af554c8f5b1365dc9ef40c1aa955",
+        "revCount": 123,
+        "type": "git",
+        "url": "https://git.auxolotl.org/pmc/labs.git"
       },
       "original": {
         "dir": "tidepool",
-        "type": "tarball",
-        "url": "https://git.auxolotl.org/auxolotl/labs/archive/main.tar.gz"
+        "ref": "update-foundation-10-6-25",
+        "type": "git",
+        "url": "https://git.auxolotl.org/pmc/labs.git"
       }
     }
   },
