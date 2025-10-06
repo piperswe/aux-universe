@@ -1,5 +1,5 @@
 builds:
   exclude: []
   include:
-  - versionedPackages.x86_64-linux.*.*
-  - versionedPackages.aarch64-linux.*.*
+  - packages.x86_64-linux.*
+  - packages.aarch64-linux.*
